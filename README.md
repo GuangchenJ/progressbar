@@ -1,38 +1,38 @@
 # progressbar
 
 A very simple, header-only, fully customizable, progress bar (with percentage)
-for c++ loops.
+for `C++` loops.
 
 Very simple to set up:
-```cpp
-#include "progressbar.hpp"
+```c++
+#include "include/progress_bar.h"
 
 int main() {
-    progressbar bar(100);
-    for (int i = 0; i < 100; ++i) {
-        bar.update();
-        // ... the program
-    }
-    return 0;
+  ProgressBar bar(100);
+  for (int i = 0; i < 100; ++i) {
+    bar.Update();
+    // ... the program
+  }
+  return 0;
 }
 ```
 ![animated gif](.github/example-simple.gif)
 
 Allows customization:
-```cpp
-#include "progressbar.hpp"
+```c++
+#include "include/progress_bar.h"
 
 int main() {
-    progressbar bar(100);
-    bar.set_todo_char(" ");
-    bar.set_done_char("█");
-    bar.set_opening_bracket_char("{");
-    bar.set_closing_bracket_char("}");
-    for (int i = 0; i < 100; ++i) {
-        bar.update();
-        // ... the program
-    }
-    return 0;
+  ProgressBar bar(100);
+  bar.SetTodoChar(" ");
+  bar.SetDoneChar("█");
+  bar.SetOpeningBracketStr("{");
+  bar.SetClosingBracketStr("}");
+  for (int i = 0; i < 100; ++i) {
+    bar.Update();
+    // ... the program
+  }
+  return 0;
 }
 ```
 ![animated gif](.github/example-custom.gif)
@@ -46,6 +46,32 @@ following structure:
 #pragma omp parallel for
 for ( ... ) {
     #pragma omp critical
-        bar.update();
+        bar.Update();
+}
+```
+When the number of loops in your program is less than 50, the following bugs may occur:
+
+```shell
+Process: [   #    #    #    #    #    #    #    #    #   #] 100%
+```
+
+Just use the `Update` function a few times, for example
+
+```c++
+#include "include/progress_bar.h"
+
+int main() {
+  int repeat_num = 5;
+  ProgressBar bar(10 * repeat_num);
+  bar.SetOpeningBracketStr("Process: [");
+  bar.SetDoneChar("#");
+  for (int i = 0; i < 10; ++i) {
+    for (int j = 0; j < repeat_num; ++j) {
+      bar.Update();
+    }
+    // ... the program
+  }
+  bar.Update();
+  return 0;
 }
 ```
