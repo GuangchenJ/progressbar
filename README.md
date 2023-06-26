@@ -39,7 +39,7 @@ int main() {
 
 ## Notes
 
-To use the bar in parallelized loops call `progressbar::update` in a critical
+To use the bar in parallelized loops call `ProgressBar::Update` in a critical
 section. With [OpenMP](http://www.openmp.org) this can be achieved with the
 following structure:
 ```cpp
