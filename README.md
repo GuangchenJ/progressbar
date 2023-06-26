@@ -63,15 +63,12 @@ Just use the `Update` function a few times, for example
 int main() {
   int repeat_num = 5;
   ProgressBar bar(10 * repeat_num);
-  bar.SetOpeningBracketStr("Process: [");
-  bar.SetDoneChar("#");
   for (int i = 0; i < 10; ++i) {
     for (int j = 0; j < repeat_num; ++j) {
       bar.Update();
     }
     // ... the program
   }
-  bar.Update();
   return 0;
 }
 ```
